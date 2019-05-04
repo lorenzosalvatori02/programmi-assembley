@@ -1,0 +1,73 @@
+Turbo Assembler	 Version 3.1	    05/04/19 11:29:01	    Page 1
+ciao.asm
+
+
+
+      1	0000			     .model small ;Modello di utilizzo della memoria
+      2	0000			     .stack ;Occupazione del segmento di stack
+      3	0000			     .data ;Segmento dati qui si definiscono le	variabili utilizzate
+      4
+      5	0000  43 69 61 6F 20 73	6F+  messaggio db 'Ciao	sono Lorenzo Salvatori 3g 2019!',10,13,'$'
+      6	      6E 6F 20 4C 6F 72	65+
+      7	      6E 7A 6F 20 53 61	6C+
+      8	      76 61 74 6F 72 69	20+
+      9	      33 67 20 32 30 31	39+
+     10	      21 0A 0D 24
+     11
+     12	0027			     .code ;Segmento codice: da	qu� in poi si scrive il	programma
+     13
+     14				     .startup ;Modulo di inizializzazione prima	dello start del	programma
+1    15	0000			     @Startup:
+1    16	0000  BA 0000s			     MOV     DX,@data
+1    17	0003  8E DA			     MOV     DS,DX
+1    18	0005  8C D3			     MOV     BX,SS
+1    19	0007  2B DA			     SUB     BX,DX
+1    20	0009  D1 E3 D1 E3 D1 E3	D1+	     SHL     BX,4
+     21	      E3
+1    22	0011  FA			     CLI
+1    23	0012  8E D2			     MOV     SS,DX
+1    24	0014  03 E3			     ADD     SP,BX
+1    25	0016  FB			     STI
+     26
+     27	0017  B4 09		     mov ah,09h
+     28	0019  BA 0000r		     mov dx,offset messaggio
+     29	001C  CD 21		     int 21h
+     30
+     31				     .exit ;Modulo di chiusura del programma
+1    32	001E  B4 4C			     MOV     AH,4Ch
+1    33	0020  CD 21			     INT     21h
+     34				     end
+Turbo Assembler	 Version 3.1	    05/04/19 11:29:01	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "05/04/19"
+??FILENAME			  Text	 "ciao	  "
+??TIME				  Text	 "11:29:01"
+??VERSION			  Number 030A
+@32BIT				  Text	 0
+@CODE				  Text	 _TEXT
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 CIAO
+@INTERFACE			  Text	 00H
+@MODEL				  Text	 2
+@STACK				  Text	 DGROUP
+@STARTUP			  Near	 _TEXT:0000
+@WORDSIZE			  Text	 2
+MESSAGGIO			  Byte	 DGROUP:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  STACK				  16  0400 Para	  Stack	  STACK
+  _DATA				  16  0027 Word	  Public  DATA
+_TEXT				  16  0022 Word	  Public  CODE
+
